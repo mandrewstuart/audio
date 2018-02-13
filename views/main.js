@@ -13,9 +13,20 @@
    limitations under the License.
 */
 
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var contextClass = (window.AudioContext ||
+window.webkitAudioContext ||
+window.mozAudioContext ||
+window.oAudioContext ||
+window.msAudioContext);
+if (contextClass) {
+    // Web Audio API is available.
+    var audioContext = new contextClass();
+} else {
+    // Web Audio API is not available. Fallback
+    alert('badness with your audio')
+}
 
-var audioContext = new AudioContext();
+
 var audioInput = null,
     realAudioInput = null,
     inputPoint = null,
